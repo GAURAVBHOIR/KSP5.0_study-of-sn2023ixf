@@ -149,13 +149,13 @@ def process_fits_files(directory, ra, dec):
             print(f'Error processing {imageName}: {e}')
             errfiles.append(imageName)
             continue
-    return psfmags, errpsfmags
+    return psfmags, errpsfmags, errfiles
 
 def main():
     # Prompt user for directory and source location
     directory = input("Enter the directory containing the .wcs.proc.fits files: ")
-    ra = float(input("Enter the RA of the source (in degrees): "))
-    dec = float(input("Enter the Dec of the source (in degrees): "))
+    ra = float(input("Enter the RA of the source (in degrees): ")) # (For SN2023xif)210.910674637
+    dec = float(input("Enter the Dec of the source (in degrees): "))# 54.3116510708
     band = input("Enter the filter band: ")
     # Test dependencies
     dependencies = [('source-extractor', 'sex'), ('psfex', 'PSFEx')]
@@ -173,6 +173,7 @@ def main():
     # Output results
     print("PSF-fit magnitudes:", psfmags)
     print("Errors in PSF-fit magnitudes:", errpsfmags)
+    print(f'Could not process {errfiles} files')
 
     # Plotting
     if psfmags and errpsfmags:  # Ensure there is data to plot
